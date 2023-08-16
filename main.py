@@ -34,3 +34,6 @@ async def movielist(request: Request,
   if hx_request:
     return templates.TemplateResponse("partials/table.html", context)
   return templates.TemplateResponse("index.html", context)
+
+
+# test
