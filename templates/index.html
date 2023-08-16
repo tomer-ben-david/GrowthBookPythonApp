@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI demo</title>
+
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+
+<div class="mx-4">
+
+    <p class="text-2xl font-bold mb-4">Converter</p>
+
+    <form id='form' hx-encoding='multipart/form-data' hx-post='/upload'>
+        <input type='file' name='file'>
+        <button>
+            Upload
+        </button>
+        <progress id='progress' value='0' max='100'></progress>
+    </form>
+    <script>
+        htmx.on('#form', 'htmx:xhr:progress', function(evt) {
+          htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+        });
+    </script>
+  
+        <table class="min-w-[50%] mb-4">
+            <thead class="border-b text-lg">
+                <tr>
+                  <th class="border">Film Name</th>
+                  <th class="border">Director</th>
+                </tr>
+              </thead>
+              <tbody class="text-center text-sm" id="table-body">
+                  {% include 'partials/table.html' %}
+              </tbody>
+        </table>
+    
+        <button class="px-3 py-1 bg-blue-600 text-white ml-4"
+                hx-get="/"
+                hx-target="#table-body"
+                hx-swap="beforeend">Load More</button>
+            
+</div>
+
+</body>
+</html>
